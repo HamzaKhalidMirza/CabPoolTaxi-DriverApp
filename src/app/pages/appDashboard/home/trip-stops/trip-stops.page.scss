@@ -1,0 +1,30 @@
+.btn-skip {
+  width: 80px;
+  --border-radius: 20px;
+  margin-right: 20px;
+}
+
+.caption ion-col {
+  margin-top: 30px;
+  font-weight: 600;
+  text-align: center;
+}
+ion-row {
+  margin-left: 15px;
+  margin-right: 15px;
+
+  ion-label {
+    font-size: 0.8rem;
+  }
+  ion-button {
+    height: 45px;
+  }
+}
+.input-row {
+  background-color: #fff;
+  border: 1px solid #bbb;
+  margin-bottom: 10px;
+}
+ion-col {
+  padding: 0;
+}

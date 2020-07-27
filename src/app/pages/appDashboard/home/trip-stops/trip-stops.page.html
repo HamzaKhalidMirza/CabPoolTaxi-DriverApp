@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" [routerLink]="['/','tabs']">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="color: var(--ion-color-primary);">Add Stop</ion-title>
+    <ion-button
+      class="btn-skip"
+      slot="end"
+      color="primary"
+      (click)="routeToSeatsReservation()"
+      >Skip</ion-button
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-no-padding" style="margin-bottom: 60px;">
+    <ion-row class="caption">
+      <ion-col size="12">
+        <p>Add Stopovers and get more Co-Travellers</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let stop of stopsLocation; let i = index">
+      <ion-col size="12" class="input-row" *ngIf="stop != null">
+        <ion-item-sliding>
+          <ion-item lines="none">
+            <ion-label>Stop: {{stop?.location?.address}}</ion-label>
+            <ion-icon name="location-outline" slot="end"></ion-icon>
+          </ion-item>
+          <ion-item-options>
+            <ion-item-option color="primary" (click)="removeStop(i)"
+              >Remove</ion-item-option
+            >
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" class="input-row">
+        <ion-item lines="none" (click)="openLocationPickerModal()">
+          <ion-label>Enter Stopover</ion-label>
+          <ion-icon name="location-outline" slot="end"></ion-icon>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row class="btn-continue">
+        <ion-col size="12">
+          <ion-button expand="full">Continue</ion-button>
+        </ion-col>
+      </ion-row> -->
+  </ion-grid>
+
+  <ion-grid
+    class="ion-no-padding ion-no-margin"
+    style="position: fixed; left: 10px; right: 10px; bottom: 15px; z-index: 1;"
+  >
+    <ion-row>
+      <ion-col size="12">
+        <ion-button
+          expand="block"
+          (click)="continue()"
+          style="height: 50px; margin: 0;"
+          >Continue</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
