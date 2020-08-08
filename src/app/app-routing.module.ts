@@ -48,6 +48,11 @@ const routes: Routes = [
     path: 'rides',
     canActivate: [IsLoginGuard],
     loadChildren: () => import('./pages/side-menu/rides/rides.module').then( m => m.RidesPageModule)
+  },
+  {
+    path: 'chat-room',
+    canActivate: [IsLoginGuard],
+    loadChildren: () => import('./pages/chat/chat-room/chat-room.module').then( m => m.ChatRoomPageModule)
   }
 ];
 

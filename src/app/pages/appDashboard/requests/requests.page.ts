@@ -24,13 +24,20 @@ export class RequestsPage implements OnInit {
 
   async ionViewWillEnter() {
     await this.loadRequestData();
+    this.requestService.resetIsReauestReceived();
+    this.requestService.requestReceived().subscribe(async (data) => {
+      console.log("2", data);
+      await this.loadRequestData();
+      this.requestService.resetIsReauestReceived();
+    });
+
   }
 
   async loadRequestData() {
     this.isLoading = true;
-    const createRequestObservable = await this.requestService.getCurrentDriverAllRequests();
+    const loadRequestObservable = await this.requestService.getCurrentDriverAllRequests();
 
-    createRequestObservable.subscribe(
+    loadRequestObservable.subscribe(
       async (response: any) => {
         this.isLoading = false;
         this.loadedRequests = response.data.data;

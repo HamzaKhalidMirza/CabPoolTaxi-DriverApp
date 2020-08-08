@@ -20,7 +20,7 @@ export class DriverAuthService {
   ) { }
 
   public checkPhoneExistance(credentials: object): Observable<any> {
-    const url = DriverAppConfig.getLocalPath() + '/api/v1/drivers/checkPhoneExistance';
+    const url = DriverAppConfig.getHostPath() + '/api/v1/drivers/checkPhoneExistance';
 
     return this.http.post(url, credentials)
     .pipe(
@@ -30,7 +30,7 @@ export class DriverAuthService {
   }
 
   public forgotPassword(credentials: object): Observable<any> {
-    const url = DriverAppConfig.getLocalPath() + '/api/v1/drivers/forgotPassword';
+    const url = DriverAppConfig.getHostPath() + '/api/v1/drivers/forgotPassword';
 
     return this.http.post(url, credentials)
     .pipe(
@@ -40,7 +40,7 @@ export class DriverAuthService {
   }
 
   public resetPassword(credentials: object): Observable<any> {
-    const url = DriverAppConfig.getLocalPath() + '/api/v1/drivers/resetPassword';
+    const url = DriverAppConfig.getHostPath() + '/api/v1/drivers/resetPassword';
 
     return this.http.patch(url, credentials)
     .pipe(
@@ -50,7 +50,7 @@ export class DriverAuthService {
   }
 
   public verifyForgotPasswordCode(credentials: object): Observable<any> {
-    const url = DriverAppConfig.getLocalPath() + '/api/v1/drivers/verifyForgotPasswordCode';
+    const url = DriverAppConfig.getHostPath() + '/api/v1/drivers/verifyForgotPasswordCode';
 
     return this.http.post(url, credentials)
     .pipe(
@@ -60,7 +60,7 @@ export class DriverAuthService {
   }
 
   public checkEmailExistance(credentials: object): Observable<any> {
-    const url = DriverAppConfig.getLocalPath() + '/api/v1/drivers/checkEmailExistance';
+    const url = DriverAppConfig.getHostPath() + '/api/v1/drivers/checkEmailExistance';
 
     return this.http.post(url, credentials)
     .pipe(
@@ -70,7 +70,7 @@ export class DriverAuthService {
   }
 
   public registerClient(credentials: object): Observable<any> {
-    const url = DriverAppConfig.getLocalPath() + '/api/v1/drivers/signup';
+    const url = DriverAppConfig.getHostPath() + '/api/v1/drivers/signup';
 
     return this.http.post(url, credentials)
     .pipe(
@@ -80,7 +80,7 @@ export class DriverAuthService {
   }
 
   public verifyPhoneExistance(credentials: object): Observable<any> {
-    const url = DriverAppConfig.getLocalPath() + '/api/v1/drivers/verifyPhoneExistance';
+    const url = DriverAppConfig.getHostPath() + '/api/v1/drivers/verifyPhoneExistance';
 
     return this.http.post(url, credentials)
     .pipe(
@@ -90,7 +90,7 @@ export class DriverAuthService {
   }
 
   public loginClient(credentials: object): Observable<any> {
-    const url = DriverAppConfig.getLocalPath() + '/api/v1/drivers/login';
+    const url = DriverAppConfig.getHostPath() + '/api/v1/drivers/login';
 
     return this.http.post(url, credentials)
     .pipe(

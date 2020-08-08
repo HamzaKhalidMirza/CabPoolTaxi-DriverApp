@@ -23,7 +23,7 @@ export class BookingService {
 
   public async getCurrentDriverAllBookings() {
     const token = await this.authService.getTokenFromStorage();
-    const url = DriverAppConfig.getLocalPath() + `/api/v1/bookings/getCurrentDriverBookings`;
+    const url = DriverAppConfig.getHostPath() + `/api/v1/bookings/getCurrentDriverBookings`;
 
     return this.http.get(url, {
         headers: new HttpHeaders().set("Authorization", "Bearer " + token),
@@ -36,7 +36,7 @@ export class BookingService {
 
   public async getCurrentDriverSingleBooking(credentials) {
     const token = await this.authService.getTokenFromStorage();
-    const url = DriverAppConfig.getLocalPath() + `/api/v1/bookings/${credentials.bookingId}`;
+    const url = DriverAppConfig.getHostPath() + `/api/v1/bookings/${credentials.bookingId}`;
 
     return this.http.get(url, {
         headers: new HttpHeaders().set("Authorization", "Bearer " + token),

@@ -10,7 +10,6 @@
 </ion-header>
 
 <ion-content>
-
   <ion-grid
     *ngIf="!isLoading && (!relevantTrips || relevantTrips.length <= 0)"
     style="position: fixed; top: 40%; left: 35%;"
@@ -22,10 +21,13 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid class="ion-no-padding"
+  <ion-grid
+    class="ion-no-padding"
     *ngIf="!isLoading && relevantTrips.length > 0"
   >
-    <ion-row class="list" *ngFor="let trip of relevantTrips"
+    <ion-row
+      class="list"
+      *ngFor="let trip of relevantTrips"
       [routerLink]="['/tabs/rides',trip?.id]"
     >
       <ion-col size="12">
@@ -34,19 +36,19 @@
             <div class="image">
               <ion-avatar>
                 <ion-img
-                src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1
+                  src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1
               .2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
                 ></ion-img>
-              </ion-avatar>  
+              </ion-avatar>
             </div>
           </div>
           <div class="caption-container">
-            <p class="name">{{trip?.driver?.email}}</p>
+            <p class="name">{{trip?.driver?.username}}</p>
             <p>{{trip?.vehicle?.modelName}}</p>
           </div>
           <div class="date-container">
             <p>{{ getTripDate(trip?.startDate) }}</p>
-          </div>  
+          </div>
         </div>
       </ion-col>
       <ion-col size="12">
@@ -67,30 +69,35 @@
           </div>
           <div class="location">
             <p style="font-weight: 600; margin-bottom: 0;">
-              {{ getTripDayName(trip?.startDate, "en-US") }} at 
-              {{ getTripTime(trip?.startTime) }}
+              {{ getTripDayName(trip?.startDate, "en-US") }} at {{
+              getTripTime(trip?.startTime) }}
             </p>
           </div>
         </div>
       </ion-col>
-      <ion-col size="12">
-        <div class="overview-container">
-          <div class="overview">
-            <p>
-              <span class="seats">{{trip?.seatsAvailable}}-Seats</span>
-              <span class="car">{{trip?.vehicle?.ac}}</span>
-            </p>
-          </div>
-        </div>
+      <ion-col size="4" offset="1">
+        <p>
+          <span class="seats overview">{{trip?.seatsAvailable}}-Seats</span>
+        </p>
+      </ion-col>
+      <ion-col size="3">
+        <p>
+          <span class="car overview">{{trip?.vehicle?.ac}}</span>
+        </p>
+      </ion-col>
+      <ion-col size="4">
+        <p>
+          <span class="status overview">{{trip?.status}}</span>
+        </p>
       </ion-col>
     </ion-row>
   </ion-grid>
-    
+
   <div *ngIf="isLoading">
     <ion-list>
       <ion-list-header>
         <ion-label>
-          <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
         </ion-label>
       </ion-list-header>
       <ion-item>
@@ -99,13 +106,13 @@
         </ion-thumbnail>
         <ion-label>
           <h3>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
           </h3>
           <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
           </p>
           <p>
-            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
           </p>
         </ion-label>
       </ion-item>
@@ -115,13 +122,13 @@
         </ion-thumbnail>
         <ion-label>
           <h3>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
           </h3>
           <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
           </p>
           <p>
-            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
           </p>
         </ion-label>
       </ion-item>
@@ -131,13 +138,13 @@
         </ion-thumbnail>
         <ion-label>
           <h3>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
           </h3>
           <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
           </p>
           <p>
-            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
           </p>
         </ion-label>
       </ion-item>
@@ -147,13 +154,13 @@
         </ion-thumbnail>
         <ion-label>
           <h3>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
           </h3>
           <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
           </p>
           <p>
-            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
           </p>
         </ion-label>
       </ion-item>
@@ -163,13 +170,13 @@
         </ion-thumbnail>
         <ion-label>
           <h3>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
           </h3>
           <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
           </p>
           <p>
-            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
           </p>
         </ion-label>
       </ion-item>
@@ -179,13 +186,13 @@
         </ion-thumbnail>
         <ion-label>
           <h3>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
           </h3>
           <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
           </p>
           <p>
-            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
           </p>
         </ion-label>
       </ion-item>
@@ -195,17 +202,16 @@
         </ion-thumbnail>
         <ion-label>
           <h3>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
           </h3>
           <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
           </p>
           <p>
-            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text>
           </p>
         </ion-label>
       </ion-item>
     </ion-list>
   </div>
-
 </ion-content>

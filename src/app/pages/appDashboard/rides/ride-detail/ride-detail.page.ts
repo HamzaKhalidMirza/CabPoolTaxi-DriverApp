@@ -1,4 +1,5 @@
-import { ActivatedRoute } from "@angular/router";
+import { AuthService } from './../../../../../common/sdk/core/auth.service';
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   Component,
   OnInit,
@@ -36,7 +37,9 @@ export class RideDetailPage implements OnInit {
     private tripService: TripService,
     private renderer: Renderer2,
     private baseMapService: BaseMapService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -172,6 +175,15 @@ export class RideDetailPage implements OnInit {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  async openChatRoom(booking) {
+    console.log(booking);
+
+    await this.authService.clearFieldDataFromStorage('chat-clientData');
+    await this.authService.setFieldDataToStorage('chat-clientData', booking.client);
+
+    this.router.navigateByUrl('chat-room');
   }
 
   getTripDayName(dateStr, locale) {
