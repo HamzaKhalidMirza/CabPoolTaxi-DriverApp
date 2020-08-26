@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { CurrentLocationService } from './../../../../common/sdk/custom/maps/currentLocation.service';
 import { BaseMapService } from './../../../../common/sdk/custom/maps/baseMap.service';
 import { Component, OnInit, ElementRef, ViewChild, Renderer2, OnDestroy } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, MenuController } from '@ionic/angular';
 import { LocationPickerModalComponent } from '../shared/modals/location-picker-modal/location-picker-modal.component';
 import {
   FormGroup,
@@ -13,6 +13,7 @@ import {
   Validators,
   FormControl,
 } from "@angular/forms";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,7 @@ export class HomePage implements OnInit, OnDestroy {
   map: any;
   marker: any;
   center: any;
+  currentLocationObs: Subscription;
   startLocation: any;
   endLocation: any;
   tripBookingForm: FormGroup;
@@ -40,11 +42,13 @@ export class HomePage implements OnInit, OnDestroy {
     private currentLocationService: CurrentLocationService,
     private modalCtrl: ModalController,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private menuCtrl: MenuController
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log('ngOnInit');
+    this.menuCtrl.enable(true);
     this.formInitializer();
   }
 
@@ -57,13 +61,20 @@ export class HomePage implements OnInit, OnDestroy {
     });
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     console.log('ionViewWillEnter');
+    const defaultPaymentMethod = await this.authService.getFieldDataFromStorage('Default-Payment-Method');
+    
+    if(!defaultPaymentMethod) {
+      await this.authService.setFieldDataToStorage('Default-Payment-Method', 'cash');
+    }
+
     this.startLocation = null;
     this.endLocation = null;
     this.tripBookingForm.reset();
-    this.currentLocationService.trackCurrentLocation()
+    this.currentLocationObs = this.currentLocationService.getCurrentLocation()
     .subscribe(location => {
+      console.log(location);
       this.center = location;
       this.baseMapService.getGoogleMapsSdk()
         .then((googleMapsSdk: any) => {
@@ -91,6 +102,7 @@ export class HomePage implements OnInit, OnDestroy {
         })
         .catch(err => {
           console.log(err);
+          this.showMapsErrorAlert();
         });
     }, err => {
       console.log(err);
@@ -106,6 +118,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
   ionViewDidLeave() {
     console.log('ionViewDidLeave');
+    this.currentLocationObs.unsubscribe();
   }
   ngOnDestroy() {
     console.log('ngOnDestroy');

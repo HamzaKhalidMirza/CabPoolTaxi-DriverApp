@@ -1,3 +1,4 @@
+import { MenuController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,18 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppStarterAuthPage implements OnInit {
 
-  sideMenu: any;
 
-  constructor() { }
+  constructor(private menuCtrl: MenuController) { }
 
   ngOnInit() {
-    this.sideMenu = document.querySelector(".side-menu");
   }
   ionViewWillEnter() {
-    this.sideMenu.style.display = "none";
+    this.menuCtrl.enable(false);
   }
   ionViewWillLeave() {
-    this.sideMenu.style.display = "flex";
   }
 
 }

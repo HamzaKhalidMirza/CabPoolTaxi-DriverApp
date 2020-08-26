@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button color="light" (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>        
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Booking Submission</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div scrollx=true>
+    <form [formGroup]="form">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <h3>Price</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="floating">Total Price</ion-label>
+              <ion-input value="Rs. 310" disabled
+                formControlName="totalFare"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Paid Price</ion-label>
+              <ion-input
+                formControlName="totalPaid"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-top-padding">
+          <ion-col class="ion-text-center">
+            <h3>Rating & Reviews</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <app-rating 
+              [rating]="ratingStar"
+              (ratingChange)="logRatingChange($event)"
+            ></app-rating>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="floating">Review</ion-label>
+              <ion-textarea rows="3" cols="20" placeholder="Enter your trip review..."
+                formControlName="review"
+              ></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="formSubmit && form.invalid">
+          <ion-col>
+            <ion-item>
+              <p style="color: var(--ion-color-danger);">{{error}}</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="formSubmit && success">
+          <ion-col>
+            <ion-item>
+              <p style="color: var(--ion-color-success);">Payment Created Successfully!</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button
+              color="primary"
+              type="submit"
+              expand="full"
+              (click)="submitBooking()"
+            >
+              <span *ngIf="!isLoading">Submit</span>
+              <span *ngIf="isLoading">
+                <ion-spinner size="large" color="light"></ion-spinner>
+              </span>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>  
+    </form>
+  </div>
+
+</ion-content>

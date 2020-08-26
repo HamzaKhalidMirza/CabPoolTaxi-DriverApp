@@ -1,7 +1,8 @@
 {
   "name": "CabPoolTaxi-Driver",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

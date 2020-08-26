@@ -186,6 +186,21 @@ export class RideDetailPage implements OnInit {
     this.router.navigateByUrl('chat-room');
   }
 
+  async startRide() {
+    await this.authService.clearFieldDataFromStorage('on-going-trip');
+    await this.authService.setFieldDataToStorage('on-going-trip', this.loadedTrip);
+    await this.authService.clearFieldDataFromStorage('start-on-going-trip');
+    await this.authService.setFieldDataToStorage('start-on-going-trip', true);
+    this.router.navigateByUrl('/on-going-ride');
+  }
+
+  async currentRide() {
+    await this.authService.clearFieldDataFromStorage('on-going-trip');
+    await this.authService.setFieldDataToStorage('on-going-trip', this.loadedTrip);
+    await this.authService.clearFieldDataFromStorage('start-on-going-trip');
+    this.router.navigateByUrl('/on-going-ride');
+  }
+
   getTripDayName(dateStr, locale) {
     var date = new Date(dateStr);
     return date.toLocaleDateString(locale, { weekday: "long" });

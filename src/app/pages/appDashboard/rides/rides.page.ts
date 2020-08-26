@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthService } from 'src/common/sdk/core/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { TripService } from 'src/common/sdk/custom/api/trip.service';
 import {format} from "date-fns";
@@ -17,7 +19,11 @@ export class RidesPage implements OnInit {
   relevantTrips: any = [];
   isLoading: any;
 
-  constructor(private tripService: TripService) {}
+  constructor(
+    private tripService: TripService,
+    private authService: AuthService,
+    private router: Router
+    ) {}
 
   ngOnInit() {
   }
@@ -49,6 +55,23 @@ export class RidesPage implements OnInit {
         }
       }
     );
+  }
+
+  async startRide(trip, e) {
+    e.stopPropagation();
+    await this.authService.clearFieldDataFromStorage('on-going-trip');
+    await this.authService.setFieldDataToStorage('on-going-trip', trip);
+    await this.authService.clearFieldDataFromStorage('start-on-going-trip');
+    await this.authService.setFieldDataToStorage('start-on-going-trip', true);
+    this.router.navigateByUrl('/on-going-ride');
+  }
+
+  async currentRide(trip, e) {
+    e.stopPropagation();
+    await this.authService.clearFieldDataFromStorage('on-going-trip');
+    await this.authService.setFieldDataToStorage('on-going-trip', trip);
+    await this.authService.clearFieldDataFromStorage('start-on-going-trip');
+    this.router.navigateByUrl('/on-going-ride');
   }
 
   getTripDayName(dateStr, locale) {
