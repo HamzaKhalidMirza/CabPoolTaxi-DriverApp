@@ -26,7 +26,7 @@ import {
 } from "@angular/fire/storage";
 
 import { NgIoModule, NgIoConfig } from 'ng-io';
-const config: NgIoConfig = { url: DriverAppConfig.getLocalPath(), options: {} };
+const config: NgIoConfig = { url: DriverAppConfig.getHostPath(), options: {} };
 
 @NgModule({
   declarations: [
