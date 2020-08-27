@@ -18,19 +18,20 @@ import { UnAuthorized } from "src/common/error/unauthorized-error";
 export class AccountSettingService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  public async updateAccountSettings(credentials: object | any) {
-    const url = DriverAppConfig.getHostPath() + "/api/v1/drivers/updateMe";
+  public async updateAccountSettings(credentials: object | any, imgUrl) {
     const token = await this.authService.getTokenFromStorage();
+    const url = DriverAppConfig.getHostPath() + "/api/v1/drivers/updateMe";
 
-    const formData = new FormData();
-    formData.append('fName', credentials.fName);
-    formData.append('lName', credentials.lName);
-    formData.append('gender', credentials.gender);
-    formData.append('dob', credentials.dob);
-    formData.append('photoAvatar', credentials.photoAvatar);
+    const formData = {
+      'fName': credentials.fName,
+      'lName': credentials.lName,
+      'gender': credentials.gender,
+      'dob': credentials.dob,
+      'photoAvatar': imgUrl
+    };
 
     return this.http
-      .patch(url, formData, {
+      .post(url, formData, {
         headers: new HttpHeaders().set("Authorization", "Bearer " + token),
       })
       .pipe(

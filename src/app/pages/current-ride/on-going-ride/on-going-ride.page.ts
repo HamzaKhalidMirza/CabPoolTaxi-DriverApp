@@ -1,4 +1,4 @@
-import { BookingSubmissionComponent } from './../booking-submission/booking-submission.component';
+import { BookingSubmissionComponent } from "./../booking-submission/booking-submission.component";
 import { Router } from "@angular/router";
 import { DriverTripSocket } from "./../../../../common/sdk/custom/sockets/driverTripSocket.service";
 import {
@@ -12,14 +12,18 @@ import { Subscription } from "rxjs";
 import { BaseMapService } from "src/common/sdk/custom/maps/baseMap.service";
 import { CurrentLocationService } from "src/common/sdk/custom/maps/currentLocation.service";
 import { AuthService } from "src/common/sdk/core/auth.service";
-import { AlertController, ModalController, ToastController } from "@ionic/angular";
+import {
+  AlertController,
+  ModalController,
+  ToastController,
+} from "@ionic/angular";
 import { AppError } from "src/common/error/app-error";
 import { BadInput } from "src/common/error/bad-input";
 import { NotFoundError } from "src/common/error/not-found-error";
 import { UnAuthorized } from "src/common/error/unauthorized-error";
 import { ScheduleOnGoingTripService } from "src/common/sdk/custom/others/scheduleOnGoingTrip.service";
-import { Location } from '@angular/common';
-import {  NavController } from '@ionic/angular';
+import { Location } from "@angular/common";
+import { NavController } from "@ionic/angular";
 
 @Component({
   selector: "app-on-going-ride",
@@ -102,7 +106,7 @@ export class OnGoingRidePage implements OnInit {
               this.googleMapsSdk = googleMapsSdk;
               const mapEl = this.mapEl.nativeElement;
 
-              if(this.map) {
+              if (this.map) {
                 this.map.panTo(this.center);
                 this.marker.setPosition(this.center);
               } else {
@@ -114,16 +118,16 @@ export class OnGoingRidePage implements OnInit {
                   mapTypeId: "roadmap",
                 });
                 this.map = map;
-  
+
                 googleMapsSdk.event.addListenerOnce(map, "idle", () => {
                   this.renderer.addClass(mapEl, "visible");
                 });
-  
+
                 this.marker = new googleMapsSdk.Marker({
                   position: location,
                   icon: "assets/icon/car.png",
                   map: map,
-                });  
+                });
               }
             })
             .catch((err) => {
@@ -215,7 +219,10 @@ export class OnGoingRidePage implements OnInit {
     if (this.clients && this.center) {
       this.trackInterval = setInterval(() => {
         this.driverTripSocket.trackTrip(
-          this.loadedTrip, this.driver, this.center, this.clients
+          this.loadedTrip,
+          this.driver,
+          this.center,
+          this.clients
         );
       }, 600);
     }
@@ -225,13 +232,16 @@ export class OnGoingRidePage implements OnInit {
     booking.arrival = true;
     this.driverTripSocket.driverArrival({
       client: booking.booking.client,
-      trip: this.loadedTrip
+      trip: this.loadedTrip,
     });
   }
 
   async driverPickupUp(booking) {
     booking.pickup = true;
-    booking.booking.startLocation.coordinates = [this.center.lat, this.center.lng];
+    booking.booking.startLocation.coordinates = [
+      this.center.lat,
+      this.center.lng,
+    ];
     console.log(this.scheduledBookings);
     let bookings = this.scheduledBookings;
     this.scheduledBookings = [];
@@ -244,7 +254,7 @@ export class OnGoingRidePage implements OnInit {
     this.driverTripSocket.driverPickup({
       client: booking.booking.client,
       trip: this.loadedTrip,
-      center: this.center
+      center: this.center,
     });
   }
 
@@ -252,21 +262,22 @@ export class OnGoingRidePage implements OnInit {
     this.alertCtrl
       .create({
         header: "Confirm!",
-        message: 'Are you sure the ride is completed!!!',
+        message: "Are you sure the ride is completed!!!",
         buttons: [
           {
-            text: 'Cancel',
-            role: 'cancel',
-            cssClass: 'secondary',
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
             handler: (blah) => {
-              console.log('Confirm Cancel: blah');
-            }
-          }, {
-            text: 'Confirm',
+              console.log("Confirm Cancel: blah");
+            },
+          },
+          {
+            text: "Confirm",
             handler: () => {
               this.handleBooking(booking);
-            }
-          }
+            },
+          },
         ],
       })
       .then((alertEl) => alertEl.present());
@@ -274,7 +285,10 @@ export class OnGoingRidePage implements OnInit {
 
   async handleBooking(booking) {
     booking.dropoff = true;
-    booking.booking.endLocation.coordinates = [this.center.lat, this.center.lng];
+    booking.booking.endLocation.coordinates = [
+      this.center.lat,
+      this.center.lng,
+    ];
 
     let bookings = this.scheduledBookings;
     this.scheduledBookings = [];
@@ -291,85 +305,92 @@ export class OnGoingRidePage implements OnInit {
       "K"
     );
     booking.price = this.scheduleOnGoingTripService.getBookingPrice(
-      this.vehicle, 12, booking.distance);
+      this.vehicle,
+      12,
+      booking.distance
+    );
 
     console.log(booking);
 
     this.modalCtrl
-    .create({
-      component: BookingSubmissionComponent,
-      componentProps: {
-        currentLocation: this.center,
-        driverTrack: booking
-      }
-    })
-    .then((modalEl) => {
-      modalEl.present();
-      modalEl.onDidDismiss().then(async (data) => {
-        if(data.data != null) {
-          console.log(data);
-        } else {
-          booking.dropoff = false;
-        }
+      .create({
+        component: BookingSubmissionComponent,
+        componentProps: {
+          currentLocation: this.center,
+          driverTrack: booking,
+        },
+      })
+      .then((modalEl) => {
+        modalEl.present();
+        modalEl.onDidDismiss().then(async (data) => {
+          if (data.data != null) {
+            console.log(data);
+          } else {
+            booking.dropoff = false;
+          }
+        });
       });
-    });
   }
 
   completeRide() {
-    this.scheduledBookings.forEach(booking => {
-      if(booking.dropoff === false) {
+    for (let i = 0; i < this.scheduledBookings.length; i++) {
+      if (this.scheduledBookings[i].dropoff === false) {
         this.alertCtrl
-        .create({
-          header: "Alert",
-          message: 'Please finish the trip first.',
-          buttons: [
-            {
-              text: 'Cancel',
-              role: 'cancel',
-              cssClass: 'secondary',
-              handler: (blah) => {
-                console.log('Confirm Cancel: blah');
-              }
-            }
-          ]
-        })
-        .then((alertEl) => alertEl.present());
+          .create({
+            header: "Alert",
+            message: "Please finish the trip first.",
+            buttons: [
+              {
+                text: "Cancel",
+                role: "cancel",
+                cssClass: "secondary",
+                handler: (blah) => {
+                  console.log("Confirm Cancel: blah");
+                },
+              },
+            ],
+          })
+          .then((alertEl) => alertEl.present());
         return;
       }
-    });
+    }
 
-    this.driverTripSocket.rideCompleted({
-      trip: this.loadedTrip
-    }).subscribe(
-      data => {
-        console.log(data);
-        this.toastCtrl
-        .create({
-          message: "Trip Completed successfully",
-          duration: 3000,
-          position: "bottom"
-        })
-        .then((toast) => {
-          toast.present();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-        setTimeout(() => {
-          this.navCtrl.pop()
-            .then(() => {
-              this.scheduleOnGoingTripService.scheduledBookings = [];
-              this.router.navigateByUrl('/tabs');
+    this.driverTripSocket
+      .rideCompleted({
+        trip: this.loadedTrip,
+      })
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.toastCtrl
+            .create({
+              message: "Trip Completed successfully",
+              duration: 3000,
+              position: "bottom",
             })
-            .catch(err => {
+            .then((toast) => {
+              toast.present();
+            })
+            .catch((err) => {
               console.log(err);
             });
-        }, 3000);
-      }, err => {
-        console.log(err);
-      }
-    );
+
+          setTimeout(() => {
+            this.navCtrl
+              .pop()
+              .then(() => {
+                this.scheduleOnGoingTripService.scheduledBookings = [];
+                this.router.navigateByUrl("/tabs");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }, 3000);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   async openChatRoom(booking) {

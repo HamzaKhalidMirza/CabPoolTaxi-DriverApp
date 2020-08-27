@@ -16,7 +16,7 @@ const routes: Routes = [
         loadChildren: () => import('./ride-detail/ride-detail.module').then( m => m.RideDetailPageModule)
       }
     ]
-  },
+  }
 ];
 
 @NgModule({

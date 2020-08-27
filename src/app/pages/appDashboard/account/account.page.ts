@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../common/sdk/core/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountPage implements OnInit {
 
-  constructor() { }
+  currentUser: any;
 
-  ngOnInit() {
+  constructor(
+    private authService: AuthService
+  ) { }
+
+  async ngOnInit() {
+    this.currentUser = await this.authService.getCurrentUser();
+    console.log(this.currentUser);
   }
 
 }

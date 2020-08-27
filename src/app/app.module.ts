@@ -17,6 +17,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppErrorHandler } from './../common/error/app-error-handler';
 import { SharedModule } from './pages/appDashboard/shared/shared.module';
 
+import { environment } from "../environments/environment";
+import { AngularFireModule } from "@angular/fire";
+import {
+  AngularFireStorageModule,
+  AngularFireStorageReference,
+  AngularFireUploadTask
+} from "@angular/fire/storage";
+
 import { NgIoModule, NgIoConfig } from 'ng-io';
 const config: NgIoConfig = { url: DriverAppConfig.getLocalPath(), options: {} };
 
@@ -35,7 +43,9 @@ const config: NgIoConfig = { url: DriverAppConfig.getLocalPath(), options: {} };
     FormsModule,
     ReactiveFormsModule,
     NgIoModule.forRoot(config),
-    SharedModule
+    SharedModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [
     StatusBar,
