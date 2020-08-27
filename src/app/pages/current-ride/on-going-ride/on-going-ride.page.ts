@@ -42,6 +42,8 @@ export class OnGoingRidePage implements OnInit {
   driverSocketObs: Subscription;
   tripSourceLocation: any;
   tripDestLocation: any;
+  tripStopLocations: any = [];
+  allStops: any = [];
   isLoading: any;
   loadedTrip: any;
   bookingTrips: any = [];
@@ -73,6 +75,13 @@ export class OnGoingRidePage implements OnInit {
     this.isLoading = true;
     await this.createMap();
     await this.getCurrentTripData();
+    if(this.googleMapsSdk) {
+      this.setDirections();
+    } else {
+      setTimeout(() => {
+        this.setDirections();
+      }, 2000);
+    }
     this.trackCurrentLocation();
   }
   ionViewDidEnter() {
@@ -91,6 +100,44 @@ export class OnGoingRidePage implements OnInit {
   }
   ngOnDestroy() {
     console.log("ngOnDestroy");
+  }
+
+  setDirections() {
+    let googleMaps = this.googleMapsSdk;
+    let map = this.map;
+    let marker = this.marker;
+    let center = this.center;
+    let directionsService = new googleMaps.DirectionsService();
+    let directionsDisplay = new googleMaps.DirectionsRenderer();
+    this.directionsService = directionsService;
+    this.directionsDisplay = directionsDisplay;
+    directionsDisplay.setMap(map);
+
+    const waypts = [];
+    this.tripStopLocations.forEach(stop => {
+      waypts.push({
+        location: {lat: stop.lat, lng: stop.lng},
+        stopover: true
+      });
+    });
+
+    var request = {
+      origin: this.tripSourceLocation,
+      destination: this.tripDestLocation,
+      waypoints: waypts,
+      travelMode: googleMaps.TravelMode.DRIVING,
+    };
+    directionsService.route(request, function (response, status) {
+      if (status == googleMaps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+        directionsDisplay.setMap(map);
+      } else {
+        alert(
+          "Directions Request failed: " +
+            status
+        );
+      }
+    });
   }
 
   createMap() {
@@ -164,13 +211,31 @@ export class OnGoingRidePage implements OnInit {
         address: this.loadedTrip.endLocation.address,
       };
 
+      if (this.loadedTrip.stops.length > 0) {
+        this.loadedTrip.stops.forEach((stop) => {
+          this.tripStopLocations.push({
+            lat: stop.location.coordinates[0],
+            lng: stop.location.coordinates[1],
+            address: stop.location.address,
+          });
+        });
+      }
+
+      this.allStops.push(this.tripSourceLocation);
+      this.tripStopLocations.forEach(stop => {
+        this.allStops.push(stop);
+      });
+      this.allStops.push(this.tripDestLocation);
+      console.log('Stops 1:', this.tripStopLocations);
+      console.log('Stops 2:', this.allStops);
+
       if (this.loadedTrip.booking.length > 0) {
         this.bookingTrips = this.loadedTrip.booking;
         this.bookingTrips.forEach((booking) => {
           this.clients.push(booking.client);
         });
       }
-
+            
       if (startTrip) {
         await this.notifyClientsAboutStartTrip();
       } else {
