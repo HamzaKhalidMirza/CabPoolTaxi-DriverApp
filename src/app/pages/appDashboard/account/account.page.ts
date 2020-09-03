@@ -1,5 +1,6 @@
 import { AuthService } from './../../../../common/sdk/core/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { format } from "date-fns";
 
 @Component({
   selector: 'app-account',
@@ -19,4 +20,8 @@ export class AccountPage implements OnInit {
     console.log(this.currentUser);
   }
 
+  setDOB(dateStr) {
+    let date = new Date(dateStr);
+    return format(date, "LLL dd, yyyy");
+  }
 }
