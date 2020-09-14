@@ -30,5 +30,4 @@ export class AccountPage implements OnInit {
     let date = new Date(dateStr);
     return format(date, "LLL dd, yyyy");
   }
-
 }
