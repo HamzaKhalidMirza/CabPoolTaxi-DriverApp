@@ -48,6 +48,9 @@
         <p>
           Seats Available: <strong>{{ loadedTrip?.seatsAvailable }}</strong>
         </p>
+        <p>
+          Vehicle Reg#: <strong>{{ loadedTrip?.vehicle?.registrationNo }}</strong>
+        </p>
         <p
           *ngIf="loadedTrip?.description"
           style="
@@ -94,7 +97,7 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12">
-          <ion-button *ngIf="loadedTrip?.status === 'upcoming'" expand="block"
+          <ion-button *ngIf="loadedTrip?.status === 'upcoming' && loadedTrip?.booking.length > 0" expand="block"
             (click)="startRide()"
             style="height: 50px; margin: 0;"
           >Start Ride</ion-button

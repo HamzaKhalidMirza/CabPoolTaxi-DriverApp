@@ -61,7 +61,7 @@ export class WalletPage implements OnInit {
 
   getTotalEarning() {
     let payment = 0;
-    this.loadedData.forEach(trip => {
+    this.relevantData.forEach(trip => {
       trip.booking.forEach(booking => {
         payment = payment + parseInt(booking.payment.totalPaid);
       });

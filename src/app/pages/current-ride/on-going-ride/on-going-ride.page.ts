@@ -195,6 +195,7 @@ export class OnGoingRidePage implements OnInit {
     const startTrip = await this.authService.getFieldDataFromStorage(
       "start-on-going-trip"
     );
+    this.authService.clearFieldDataFromStorage('start-on-going-trip');
 
     if (trip) {
       this.loadedTrip = trip;
@@ -289,7 +290,7 @@ export class OnGoingRidePage implements OnInit {
           this.center,
           this.clients
         );
-      }, 600);
+      }, 1000);
     }
   }
 

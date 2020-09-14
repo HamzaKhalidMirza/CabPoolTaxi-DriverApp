@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   currentUser: any;
   public appMainPages = [
     {
-      title: 'Your Trips',
+      title: 'History',
       url: '/rides',
       icon: 'car-sport'
     },

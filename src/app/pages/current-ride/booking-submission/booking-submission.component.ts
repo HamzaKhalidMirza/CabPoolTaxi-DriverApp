@@ -25,7 +25,7 @@ export class BookingSubmissionComponent implements OnInit {
   @Input('driverTrack') driverTrack: any;
   form: FormGroup;
   formSubmit: any;
-  ratingStar = 4;
+  ratingStar = 0;
   error: any;
   success: any;
   isLoading: any;

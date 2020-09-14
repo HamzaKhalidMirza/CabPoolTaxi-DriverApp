@@ -70,6 +70,11 @@
               getTripTime(trip?.startTime) }}
             </p>
           </div>
+          <div class="location" style="margin-top: 10px;">
+            <p>
+              Vehicle Reg#: <strong>{{ trip?.vehicle?.registrationNo }}</strong>
+            </p>
+          </div>
         </div>
       </ion-col>
       <ion-col size="4" offset="1">
@@ -88,10 +93,10 @@
         </p>
       </ion-col>
       <ion-col size="12">
-        <ion-button *ngIf="trip?.status === 'upcoming'" expand="block"
+        <!-- <ion-button *ngIf="trip?.status === 'upcoming' && trip?.booking.length > 0" expand="block"
           (click)="startRide(trip, $event)"
           >Start Ride</ion-button
-        >
+        > -->
         <ion-button *ngIf="trip?.status === 'current'" expand="block"
           (click)="currentRide(trip, $event)"
           >Current Ride</ion-button>

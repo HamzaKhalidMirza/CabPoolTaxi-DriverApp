@@ -25,7 +25,7 @@ export class RatingComponent implements OnInit {
       GREY = '#CCCCCC',
       GREEN = "#00ff00",
       YELLOW = "#FFCA28",
-      RED = "#FFCA28",
+      RED = "#FF0000",
     }
 
     if (this.isAboveRating(index)) {
@@ -37,7 +37,7 @@ export class RatingComponent implements OnInit {
       case 3:
       case 4:
       case 5:
-        return COLORS.RED;
+        return COLORS.YELLOW;
       default:
         return COLORS.GREY;
     }
