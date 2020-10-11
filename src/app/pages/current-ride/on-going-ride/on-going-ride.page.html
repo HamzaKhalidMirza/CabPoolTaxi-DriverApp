@@ -31,9 +31,37 @@
                 ></ion-img>
               </ion-thumbnail>
             </ion-col>
-            <ion-col size="8" class="name-col">
+            <ion-col size="6" class="name-col">
               <div class="name">
                 {{booking?.booking?.client?.username}}
+              </div>
+            </ion-col>
+            <ion-col size="2" class="inbox-col">
+              <div class="inbox" *ngIf="booking.pickup === false">
+                <a
+                class="navigation"
+                target="_blank"
+                href="https://www.google.com/maps/search/?api=1&query={{booking?.booking?.startLocation.coordinates[0]}},{{booking?.booking?.startLocation.coordinates[1]}}"
+                >
+                  <ion-icon
+                    size="large"
+                    color="primary"
+                    name="navigate-sharp"
+                  ></ion-icon>
+                </a>
+              </div>
+              <div class="inbox" *ngIf="booking.pickup === true">
+                <a
+                class="navigation"
+                target="_blank"
+                href="https://www.google.com/maps/search/?api=1&query={{booking?.booking?.endLocation.coordinates[0]}},{{booking?.booking?.endLocation.coordinates[1]}}"
+                >
+                  <ion-icon
+                    size="large"
+                    color="primary"
+                    name="navigate-outline"
+                  ></ion-icon>
+                </a>
               </div>
             </ion-col>
             <ion-col size="2" class="inbox-col">
