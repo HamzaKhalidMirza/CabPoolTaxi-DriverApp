@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.cabpooltaxi-driver",
+  "appId": "com.ionic.cabpooltaxidriver",
   "appName": "CabPoolTaxi Driver",
   "bundledWebRuntime": false,
   "npmClient": "npm",

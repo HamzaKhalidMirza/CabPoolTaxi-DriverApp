@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.ionic.cabpooltaxidriver;
 
 import android.os.Bundle;
 
